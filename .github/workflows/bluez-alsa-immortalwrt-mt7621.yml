@@ -98,13 +98,27 @@ jobs:
     - name: Compile Packages
       run: |
         cd openwrt
-        # 精确单独编译组件
+        # 1. 刷新链接关系
         make package/symlinks
         
-        # 2. 使用标准的短别名命令单独编译 bluez
-        make package/bluez/compile -j$(nproc) V=s
+        # 2. 【核心破局】手工依次编译 bluez 核心依赖的目标架构包 (Target Compile)
+        # 这一步会为 MIPS 架构生成 bluez 编译所需的头文件和 .so 动态链接库
+        echo "=== 正在精准编译底层基础依赖 ==="
+        make package/libs/libffi/compile -j$(nproc) V=s
+        make package/libs/ncurses/compile -j$(nproc) V=s
+        make package/utils/util-linux/compile -j$(nproc) V=s
+        make package/libs/glib2/compile -j$(nproc) V=s
+        make package/utils/dbus/compile -j$(nproc) V=s
+        make package/libs/libical/compile -j$(nproc) V=s
         
-        # 3. 使用标准的短别名命令单独编译 bluez-alsa
+        # 3. 【核心破局】手工依次编译 bluez-alsa 核心依赖的目标架构包
+        echo "=== 正在精准编译音频依赖 ==="
+        make package/libs/alsa-lib/compile -j$(nproc) V=s
+        make package/feeds/packages/sbc/compile -j$(nproc) V=s
+        
+        # 4. 最后水到渠成编译主角
+        echo "=== 正在编译目标蓝牙音频包 ==="
+        make package/bluez/compile -j$(nproc) V=s
         make package/bluez-alsa/compile -j$(nproc) V=s
 
     - name: Organize APK Files
