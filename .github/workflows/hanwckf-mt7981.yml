@@ -1,4 +1,4 @@
-name: Build mt7981 hanwckf/immortalwrt-798x
+name: Build 21.02 mt7981 hanwckf/immortalwrt-798x
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
