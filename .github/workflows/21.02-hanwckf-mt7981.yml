@@ -51,6 +51,12 @@ jobs:
         ln -sf /srcdir/openwrt $GITHUB_WORKSPACE/openwrt
         echo "REPO_HEAD=_$(git ls-remote $REPO_URL HEAD | head -c7)" >> $GITHUB_ENV
 
+    - name: Pull external package luci-app-ap-modem
+      run: |
+       cd $GITHUB_WORKSPACE
+       git clone https://github.com/zyqfork/luci-app-ap-modem.git package/luci-app-ap-modem
+
+
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a
 
