@@ -1,4 +1,4 @@
-name: Build mt7981 padavanonly/immortalwrt-mt798x-24.10
+name: Build 24.10 mt7981 padavanonly/immortalwrt-mt798x-24.10
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
