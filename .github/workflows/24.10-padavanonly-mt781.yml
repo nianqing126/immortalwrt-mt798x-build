@@ -60,6 +60,9 @@ jobs:
         if [ -f "$PROJECT_MIRRORS_FILE" ]; then
           sed -i '/.cn\//d; /tencent/d; /aliyun/d' "$PROJECT_MIRRORS_FILE"
         fi
+    - name: Clone extra luci-app-ap-modem
+      run: |
+        git clone --depth 1 https://github.com/zyqfork/luci-app-ap-modem.git package/luci-app-ap-modem
 
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a
