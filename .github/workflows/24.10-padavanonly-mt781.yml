@@ -83,7 +83,8 @@ jobs:
     - name: Load custom config
       run: |
         cd openwrt
-        cp -f ./defconfig/mt7981-ax3000.config .config
+        cat $GITHUB_WORKSPACE/defconfig/mt7981-ax3000.config >> .config
+        # cp -f ./defconfig/mt7981-ax3000.config .config
         sed -i 's/_mediatek_mt7981/_mediatek_filogic/g' .config
         #cat $GITHUB_WORKSPACE/MT7981.txt $GITHUB_WORKSPACE/GENERAL.txt > .config
         echo "CONFIG_PACKAGE_kmod-nft-compat=y" >> .config
